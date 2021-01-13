@@ -19,3 +19,8 @@ pre-commit==2.9.3
 
 pytest>=6.2.1
 pytest-cov>=2.10.1
+
+flask==1.1.2
+flask-sqlalchemy==2.4.4
+flask-migrate==2.5.3
+flask-wtf==0.14.2
