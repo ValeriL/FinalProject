@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <style>
+       body {
+        background: #333; /* Угольный */
+        color: #fc0; /* Оранжеватый */
+        font-size: 30px;
+       }
+       table {
+        border-spacing: 5px 5px;
+        width="80%";
+       }
+       td, th {
+        text-align: left;
+        border-bottom: 1px solid #fc0;
+        padding: 6px;
+       }
+       .download_btn {
+        background: #fc0;
+        color: #333; /* Белые буквы */
+        font-size: 20px;
+        border-radius: 15px;
+        height: 40px;
+        width: 200px;
+        font: aerial
+       }
+       #footer {
+        position: fixed; /* Фиксированное положение */
+        padding: 10px; /* Поля вокруг текста */
+        width: 100%; /* Ширина слоя */
+        left: 0; bottom: 0; /* Левый нижний угол */
+       }
+    </style>
+</head>
+<body>
+<p align="center"><font size="40px">Search history</font></p><br>
+        <table align="center" width="80%">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Name</th>
+                    <th>Positive reviews</th>
+                    <th>Search date</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for movie in bd_data %}
+                <tr>
+                    <td width="10%">{{ movie.id }}</td>
+                    <td width="30%">{{ movie.name }}</td>
+                    <td width="20%">{{ movie.pos_per }}%</td>
+                    <td width="20%">{{ movie.search_date.year }}-{{ movie.search_date.month }}-{{ movie.search_date.day }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+    </table>
+    <div id="footer">
+        <p align="center"><button class="download_btn">Download</button></p>
+    </div>
+</body>
+</html>

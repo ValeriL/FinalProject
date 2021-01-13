@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+           body {
+            background: #333; /* Угольный */
+            color: #fc0; /* Оранжеватый */
+            font-size: 40px;
+           }
+    </style>
+</head>
+<body>
+    {% if movie.name %}
+    <p align="center">{{ movie.name }}</p><br>
+    <table width="100%" align="center">
+        <tr>
+            <th align="center"><img src="images/positive_smiley.png" width="256" height="256" alt="Positive"/></th>
+            <th align="center"><img src="images/negative_smiley.png" width="256" height="256" alt="Negative" /></th>
+        </tr>
+        <tr>
+            <td align="center">{{ movie.pos_per }}%</td>
+            <td align="center">{{ movie.neg_per }}%</td>
+        </tr>
+    </table>
+    {% else %}
+    <p align="center">No movie with such name</p>
+    {% endif %}
+
+</body>
+</html>
