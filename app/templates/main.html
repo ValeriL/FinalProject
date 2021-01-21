@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Welcome!</title>
+        <style>
+           body {
+            background: #333; /* Угольный */
+            color: #fc0; /* Оранжеватый */
+            font-size: 40px;
+           }
+           form {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin: -100px 0 0 -200px;
+           }
+           p {
+            margin-top: 0.5em; /* Отступ сверху */
+            margin-bottom: 0.5em; /* Отступ снизу */
+           }
+           .submit_button {
+            background: #fc0;
+            color: #333; /* Белые буквы */
+            font-size: 20px;
+            border-radius: 15px;
+            height: 40px;
+            width: 200px;
+            font: aerial
+           }
+           .movie_input {
+            border-radius: 20px;
+            width: 360px;
+            height: 30px;
+           }
+           .history_btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 70px;
+            height: 70px;
+           }
+           .error {
+            color: red;
+            font-size: 20px;
+           }
+        </style>
+    </head>
+    <body>
+         <p><a href=history><input type="image" src="/images/history_button.png" class="history_btn"></a></p>
+
+         <form action="" method="post" novalidate>
+             <p align="center">
+                 {{ form.movie_name.label }}<br>
+                 {{ form.movie_name(class_='movie_input') }}<br>
+                 {% for error in form.movie_name.errors %}
+                 <span class="error">{{ error }}</span>
+                 {% endfor %}
+             </p>
+             <p align="center">{{ form.submit(class_='submit_button') }}</p>
+         </form>
+
+    </body>
+</html>
