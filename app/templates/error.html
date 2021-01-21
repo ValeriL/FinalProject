@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Result</title>
     <style>
             body {
             background: #333; /* Угольный */
@@ -32,20 +31,7 @@
     </style>
 </head>
 <body>
-<p align="center">{{ movie.title }}</p>
-<br>
-<table width="100%" align="center">
-    <tr>
-        <th align="center"><img src="{{ url_for('static', filename='images/positive_smiley.png') }}" width="256"
-                                height="256" alt="Positive"/></th>
-        <th align="center"><img src="{{ url_for('static', filename='images/negative_smiley.png') }}" width="256"
-                                height="256" alt="Negative"/></th>
-    </tr>
-    <tr>
-        <td align="center">{{ movie.positive_percent }}%</td>
-        <td align="center">{{ movie.negative_percent }}%</td>
-    </tr>
-</table>
+<p align="center">{{ error }}</p>
 <div id="footer">
     <p align="center">
         <button class="return_btn"><a href="/main">Return</a></button>
