@@ -8,6 +8,7 @@ from app.calculations import (
     get_amount_positive,
     get_sentiments_percent,
 )
+from app.error import NoReviews
 from app.forms import MovieSearchForm
 from app.models import MovieInfo
 from app.pdf_creator import create_history_pdf
@@ -55,10 +56,11 @@ def result(movie: Tuple[str, str]) -> str:
             )
     else:
         predictions = get_predictions(movie_id)
+        positive_percent, negative_percent = get_sentiments_percent(predictions)
         new_movie = MovieInfo(
             title=correct_title,
-            positive_percent=get_sentiments_percent(predictions)[0],
-            negative_percent=get_sentiments_percent(predictions)[1],
+            positive_percent=positive_percent,
+            negative_percent=negative_percent,
             amount_positive_reviews=get_amount_positive(predictions),
             amount_negative_reviews=get_amount_negative(predictions),
         )
@@ -87,7 +89,7 @@ def handle_db_error(error: str) -> str:
     return render_template("error.html", error=error)
 
 
-@app.errorhandler(Exception)
+@app.errorhandler(NoReviews)
 def handle_no_reviews_error(error: str) -> str:
     """Get page with no reviews error message."""
-    return render_template("error.html", error="No reviews yet.")
+    return render_template("error.html", error=error)

@@ -2,6 +2,7 @@
 from typing import List, Tuple
 
 import requests
+from app.error import NoReviews
 
 
 def get_all_movies(name: str) -> Tuple[str, str]:  # noqa: CCR001: 7 > 5
@@ -39,7 +40,7 @@ def get_all_reviews(movie_id: str) -> List[str]:
         if not pagination_key:
             break
     if not reviews:
-        raise Exception
+        raise NoReviews("No reviews yet.")
     return reviews
 
 
