@@ -6,8 +6,7 @@ from app import app, db
 from app.calculations import (
     get_amount_negative,
     get_amount_positive,
-    get_negative_percent,
-    get_positive_percent,
+    get_sentiments_percent,
 )
 from app.forms import MovieSearchForm
 from app.models import MovieInfo
@@ -28,7 +27,7 @@ def main_page() -> str:
         movies = get_all_movies(title)
         amount = len(movies)
         if amount == 0:
-            return redirect(url_for("error_handler", erorr="No movie found."))
+            return render_template("error.html", error="No movie found.")
         elif amount == 1:
             return redirect(url_for("result", movie=movies[0]))
         else:
@@ -37,7 +36,7 @@ def main_page() -> str:
 
 
 @app.route("/result/<tuple:movie>", methods=["GET", "POST"])
-def result(movie: Tuple[str, str]) -> str:  # noqa: CCR001 8 > 5
+def result(movie: Tuple[str, str]) -> str:
     """Get page with review analysis information."""
     correct_title, movie_id = movie
     if db.session.query(db.exists().where(MovieInfo.title == correct_title)).scalar():
@@ -55,23 +54,16 @@ def result(movie: Tuple[str, str]) -> str:  # noqa: CCR001 8 > 5
                 amount_negative_reviews=movie.amount_negative_reviews,
             )
     else:
-        try:
-            predictions = get_predictions(movie_id)
-        except Exception:
-            return redirect(url_for("error_handler", error="No reviews yet."))
+        predictions = get_predictions(movie_id)
         new_movie = MovieInfo(
             title=correct_title,
-            positive_percent=get_positive_percent(predictions),
-            negative_percent=get_negative_percent(predictions),
+            positive_percent=get_sentiments_percent(predictions)[0],
+            negative_percent=get_sentiments_percent(predictions)[1],
             amount_positive_reviews=get_amount_positive(predictions),
             amount_negative_reviews=get_amount_negative(predictions),
         )
-    try:
-        db.session.add(new_movie)
-        db.session.commit()
-    except SQLAlchemyError:
-        error = "Database error."
-        return redirect(url_for("error_handler", error=error))
+    db.session.add(new_movie)
+    db.session.commit()
     create_history_pdf()
     return render_template("result.html", movie=new_movie)
 
@@ -89,7 +81,13 @@ def search_results(movies: List[Tuple[str, str]]) -> str:
     return render_template("search_results.html", movies=movies)
 
 
-@app.route("/error/<error>")
-def error_handler(error: str) -> str:
-    """Get page with error message."""
+@app.errorhandler(SQLAlchemyError)
+def handle_db_error(error: str) -> str:
+    """Get page with db error message."""
     return render_template("error.html", error=error)
+
+
+@app.errorhandler(Exception)
+def handle_no_reviews_error(error: str) -> str:
+    """Get page with no reviews error message."""
+    return render_template("error.html", error="No reviews yet.")

@@ -1,65 +1,60 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <title>Welcome!</title>
-        <style>
-            body {
-            background: #333; /* Угольный */
-            color: #fc0; /* Оранжеватый */
-            font-size: 40px;
-            }
-            form {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            margin: -100px 0 0 -200px;
-            }
-            p {
-            margin-top: 0.5em; /* Отступ сверху */
-            margin-bottom: 0.5em; /* Отступ снизу */
-            }
-            .submit_button {
-            background: #fc0;
-            color: #333; /* Белые буквы */
-            font-size: 20px;
-            border-radius: 15px;
-            height: 40px;
-            width: 200px;
-            font: aerial
-            }
-            .movie_input {
-            border-radius: 30px;
-            width: 360px;
-            height: 35px;
-            font-size: 25px;
-            padding-left: 10px;
-            padding-right: 10px;
-            }
-            .history_btn {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            width: 70px;
-            height: 70px;
-            }
-            .error {
-            color: red;
-            font-size: 20px;
-            }
-        </style>
-    </head>
-    <body>
-    <a href="/history"><img src="{{ url_for('static', filename='images/history_button.png') }}" alt="history"
-                            class="history_btn"></a>
-    <form method="post" novalidate>
-        <p align="center">
-            {{ form.movie_title.label }}<br>
-            {{ form.movie_title(class_='movie_input') }}<br>
-            {% for error in form.movie_title.errors %}
-            <span class="error">{{ error }}</span>
-            {% endfor %}
-        </p>
-        <p align="center">{{ form.submit(class_='submit_button') }}</p>
-    </form>
-    </body>
-</html>
+{% extends "base.html" %}
+
+{% block title %}Welcome!{% endblock %}
+
+{% block style %}
+{{ super() }}
+form {
+position: absolute;
+top: 50%;
+left: 50%;
+margin: -100px 0 0 -200px;
+}
+p {
+margin-top: 0.5em; /* Отступ сверху */
+margin-bottom: 0.5em; /* Отступ снизу */
+}
+.submit_button {
+background: #fc0;
+color: #333; /* Белые буквы */
+font-size: 20px;
+border-radius: 15px;
+height: 40px;
+width: 200px;
+font: aerial
+}
+.movie_input {
+border-radius: 30px;
+width: 360px;
+height: 35px;
+font-size: 25px;
+padding-left: 10px;
+padding-right: 10px;
+}
+.history_btn {
+position: absolute;
+top: 10px;
+right: 10px;
+width: 70px;
+height: 70px;
+}
+.error {
+color: red;
+font-size: 20px;
+}
+{% endblock %}
+
+{% block content %}
+<a href="/history"><img src="{{ url_for('static', filename='images/history_button.png') }}" alt="history"
+    class="history_btn"></a>
+<form method="post" novalidate>
+    <p align="center">
+        {{ form.movie_title.label }}<br>
+        {{ form.movie_title(class_='movie_input') }}<br>
+        {% for error in form.movie_title.errors %}
+        <span class="error">{{ error }}</span>
+        {% endfor %}
+    </p>
+    <p align="center">{{ form.submit(class_='submit_button') }}</p>
+</form>
+{% endblock %}

@@ -1,45 +1,35 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Result</title>
-    <style>
-            body {
-            background: #333; /* Угольный */
-            color: #fc0; /* Оранжеватый */
-            font-size: 40px;
-            }
-            .return_btn {
-            background: #fc0;
-            color: #333;
-            font-size: 25px;
-            border-radius: 30px;
-            height: 50px;
-            width: 300px;
-            font: aerial
-            }
-            #footer {
-            position: fixed; /* Фиксированное положение */
-            padding: 10px; /* Поля вокруг текста */
-            width: 100%; /* Ширина слоя */
-            left: 0; bottom: 0; /* Левый нижний угол */
-            }
-            a {
-            text-decoration: none;
-            color: #333;
-            }
+{% extends "base.html" %}
 
-    </style>
-</head>
-<body>
+{% block title %}Result{% endblock %}
+
+{% block style %}
+{{ super() }}
+.return_btn {
+background: #fc0;
+color: #333;
+font-size: 25px;
+border-radius: 30px;
+height: 50px;
+width: 300px;
+font: aerial
+}
+#footer {
+position: fixed; /* Фиксированное положение */
+padding: 10px; /* Поля вокруг текста */
+width: 100%; /* Ширина слоя */
+left: 0; bottom: 0; /* Левый нижний угол */
+}
+{% endblock %}
+
+{% block content %}
 <p align="center">{{ movie.title }}</p>
 <br>
 <table width="100%" align="center">
     <tr>
         <th align="center"><img src="{{ url_for('static', filename='images/positive_smiley.png') }}" width="256"
-                                height="256" alt="Positive"/></th>
+            height="256" alt="Positive"/></th>
         <th align="center"><img src="{{ url_for('static', filename='images/negative_smiley.png') }}" width="256"
-                                height="256" alt="Negative"/></th>
+            height="256" alt="Negative"/></th>
     </tr>
     <tr>
         <td align="center">{{ movie.positive_percent }}%</td>
@@ -51,5 +41,4 @@
         <button class="return_btn"><a href="/main">Return</a></button>
     </p>
 </div>
-</body>
-</html>
+{% endblock %}

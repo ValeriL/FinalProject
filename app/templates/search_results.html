@@ -1,40 +1,31 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <style>
-            body {
-            background: #333; /* Угольный */
-            color: #fc0; /* Оранжеватый */
-            font-size: 40px;
-            }
-            #footer {
-            position: fixed; /* Фиксированное положение */
-            padding: 10px; /* Поля вокруг текста */
-            width: 100%; /* Ширина слоя */
-            left: 0; bottom: 0; /* Левый нижний угол */
-            }
-            a {
-            text-decoration: none;
-            color: #333;
-            }
-            .select_btn {
-            background: #fc0;
-            color: #333;
-            font-size: 25px;
-            border-radius: 30px;
-            height: 60px;
-            width: 600px;
-            font: aerial;
-            }
-            p {
-            margin-top: 7px; /* Отступ сверху */
-            margin-bottom: 7px; /* Отступ снизу */
-            }
+{% extends "base.html" %}
 
-    </style>
-</head>
-<body>
+{% block title %}Search{% endblock %}
+
+{% block style %}
+{{ super() }}
+.select_btn {
+background: #fc0;
+color: #333;
+font-size: 25px;
+border-radius: 30px;
+height: 60px;
+width: 700px;
+font: aerial;
+}
+#footer {
+position: fixed; /* Фиксированное положение */
+padding: 10px; /* Поля вокруг текста */
+width: 100%; /* Ширина слоя */
+left: 0; bottom: 0; /* Левый нижний угол */
+}
+p {
+margin-top: 7px; /* Отступ сверху */
+margin-bottom: 7px; /* Отступ снизу */
+}
+{% endblock %}
+
+{% block content %}
 <p align="center">You mean:</p>
 <br>
 {% for movie in movies %}
@@ -42,5 +33,4 @@
     <button class="select_btn"><a href="{{ url_for('result', movie=movie) }}">{{ movie[0] }}</a></button>
 </p>
 {% endfor %}
-</body>
-</html>
+{% endblock %}

@@ -1,41 +1,31 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <style>
-            body {
-            background: #333; /* Угольный */
-            color: #fc0; /* Оранжеватый */
-            font-size: 40px;
-            }
-            .return_btn {
-            background: #fc0;
-            color: #333;
-            font-size: 25px;
-            border-radius: 30px;
-            height: 50px;
-            width: 300px;
-            font: aerial
-            }
-            #footer {
-            position: fixed; /* Фиксированное положение */
-            padding: 10px; /* Поля вокруг текста */
-            width: 100%; /* Ширина слоя */
-            left: 0; bottom: 0; /* Левый нижний угол */
-            }
-            a {
-            text-decoration: none;
-            color: #333;
-            }
+{% extends "base.html" %}
 
-    </style>
-</head>
-<body>
+{% block title %}Error{% endblock %}
+
+{% block style %}
+{{ super() }}
+.return_btn {
+background: #fc0;
+color: #333;
+font-size: 25px;
+border-radius: 30px;
+height: 50px;
+width: 300px;
+font: aerial
+}
+#footer {
+position: fixed; /* Фиксированное положение */
+padding: 10px; /* Поля вокруг текста */
+width: 100%; /* Ширина слоя */
+left: 0; bottom: 0; /* Левый нижний угол */
+}
+{% endblock %}
+
+{% block content %}
 <p align="center">{{ error }}</p>
 <div id="footer">
     <p align="center">
         <button class="return_btn"><a href="/main">Return</a></button>
     </p>
 </div>
-</body>
-</html>
+{% endblock %}
