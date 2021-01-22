@@ -1,11 +1,14 @@
-from app import models, routes
 from config import Config
 from flask import Flask
-from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
+
+from .utils import ListConverter, TupleConverter
 
 
 app = Flask(__name__)
 app.config.from_object(Config)
 db = SQLAlchemy(app)
-migrate = Migrate(app, db)
+app.url_map.converters["list"] = ListConverter
+app.url_map.converters["tuple"] = TupleConverter
+
+from app import models, routes  # noqa: E402, I100

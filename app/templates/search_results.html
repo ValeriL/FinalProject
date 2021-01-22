@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}Search{% endblock %}
+
+{% block style %}
+{{ super() }}
+.select_btn {
+background: #fc0;
+color: #333;
+font-size: 25px;
+border-radius: 30px;
+height: 60px;
+width: 700px;
+font: aerial;
+}
+#footer {
+position: fixed; /* Фиксированное положение */
+padding: 10px; /* Поля вокруг текста */
+width: 100%; /* Ширина слоя */
+left: 0; bottom: 0; /* Левый нижний угол */
+}
+p {
+margin-top: 7px; /* Отступ сверху */
+margin-bottom: 7px; /* Отступ снизу */
+}
+{% endblock %}
+
+{% block content %}
+<p align="center">You mean:</p>
+<br>
+{% for movie in movies %}
+<p align="center">
+    <button class="select_btn"><a href="{{ url_for('result', movie=movie) }}">{{ movie[0] }}</a></button>
+</p>
+{% endfor %}
+{% endblock %}

@@ -10,5 +10,5 @@ class Config(object):
     SECRET_KEY = os.environ.get("SECRET_KEY") or "I-have-no-bloody-idea"
     SQLALCHEMY_DATABASE_URI = os.environ.get(
         "DATABASE_URL"
-    ) or "sqlite:///" + os.path.join(basedir, "example.sqlite")
+    ) or "sqlite:///" + os.path.join(basedir, "movies_info.sqlite")
     SQLALCHEMY_TRACK_MODIFICATIONS = False

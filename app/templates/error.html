@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}Error{% endblock %}
+
+{% block style %}
+{{ super() }}
+.return_btn {
+background: #fc0;
+color: #333;
+font-size: 25px;
+border-radius: 30px;
+height: 50px;
+width: 300px;
+font: aerial
+}
+#footer {
+position: fixed; /* Фиксированное положение */
+padding: 10px; /* Поля вокруг текста */
+width: 100%; /* Ширина слоя */
+left: 0; bottom: 0; /* Левый нижний угол */
+}
+{% endblock %}
+
+{% block content %}
+<p align="center">{{ error }}</p>
+<div id="footer">
+    <p align="center">
+        <button class="return_btn"><a href="/main">Return</a></button>
+    </p>
+</div>
+{% endblock %}
