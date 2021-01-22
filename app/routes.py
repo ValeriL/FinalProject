@@ -1,4 +1,5 @@
 """Page routes module."""
+from datetime import datetime
 from typing import List, Tuple
 
 from app import app, db
@@ -36,28 +37,43 @@ def main_page() -> str:
 
 
 @app.route("/result/<tuple:movie>", methods=["GET", "POST"])
-def result(movie: Tuple[str, str]) -> str:
+def result(movie: Tuple[str, str]) -> str:  # noqa: CCR001 8 > 5
     """Get page with review analysis information."""
     correct_title, movie_id = movie
+    if db.session.query(db.exists().where(MovieInfo.title == correct_title)).scalar():
+        movie = (
+            MovieInfo.query.order_by(MovieInfo.movie_id.desc())
+            .filter_by(title=correct_title)
+            .first()
+        )
+        if (datetime.today() - movie.search_date).days < 30:
+            new_movie = MovieInfo(
+                title=correct_title,
+                positive_percent=movie.positive_percent,
+                negative_percent=movie.negative_percent,
+                amount_positive_reviews=movie.amount_positive_reviews,
+                amount_negative_reviews=movie.amount_negative_reviews,
+            )
+    else:
+        try:
+            predictions = get_predictions(movie_id)
+        except Exception:
+            return redirect(url_for("error_handler", error="No reviews yet."))
+        new_movie = MovieInfo(
+            title=correct_title,
+            positive_percent=get_positive_percent(predictions),
+            negative_percent=get_negative_percent(predictions),
+            amount_positive_reviews=get_amount_positive(predictions),
+            amount_negative_reviews=get_amount_negative(predictions),
+        )
     try:
-        predictions = get_predictions(movie_id)
-    except Exception:
-        return redirect(url_for("error_handler", error="No reviews yet."))
-    movie = MovieInfo(
-        title=correct_title,
-        positive_percent=get_positive_percent(predictions),
-        negative_percent=get_negative_percent(predictions),
-        amount_positive_reviews=get_amount_positive(predictions),
-        amount_negative_reviews=get_amount_negative(predictions),
-    )
-    try:
-        db.session.add(movie)
+        db.session.add(new_movie)
         db.session.commit()
     except SQLAlchemyError:
         error = "Database error."
         return redirect(url_for("error_handler", error=error))
     create_history_pdf()
-    return render_template("result.html", movie=movie)
+    return render_template("result.html", movie=new_movie)
 
 
 @app.route("/history")

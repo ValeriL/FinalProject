@@ -17,4 +17,4 @@ class MovieInfo(db.Model):
 
     def __repr__(self):
         """Instance representation."""
-        return "<Movie {}: +{}% -{}%>".format(self.title, self.pos_per, self.neg_per)
+        return "<Movie {}: +{}%>".format(self.title, self.positive_percent)
