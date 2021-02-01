@@ -10,8 +10,8 @@ def get_all_movies(name: str) -> Tuple[str, str]:  # noqa: CCR001: 7 > 5
     url = "https://google-search5.p.rapidapi.com/google-serps/"
     querystring = {"q": f"{name} imdb", "pages": "1", "gl": "us", "autocorrect": "1"}
     headers = {
-        "x-rapidapi-key": "1943403269mshd455dfb5beafc5ep1797f6jsn5395f994d5c1",
-        "x-rapidapi-host": "google-search5.p.rapidapi.com",
+        "x-rapidapi-key": "",
+        "x-rapidapi-host": "",
     }
     response = requests.request("GET", url, headers=headers, params=querystring).json()
     movie_results = response["data"]["results"]["organic"]
@@ -49,8 +49,8 @@ def get_page_reviews(movie_id: str, pagination_key: str = None) -> Tuple[str, st
     url = "https://imdb8.p.rapidapi.com/title/get-user-reviews"
     querystring = {"tconst": movie_id, "paginationKey": pagination_key}
     headers = {
-        "x-rapidapi-key": "1943403269mshd455dfb5beafc5ep1797f6jsn5395f994d5c1",
-        "x-rapidapi-host": "imdb8.p.rapidapi.com",
+        "x-rapidapi-key": "",
+        "x-rapidapi-host": "",
     }
     response = requests.request("GET", url, headers=headers, params=querystring).json()
     try:
